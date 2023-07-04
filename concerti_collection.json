@@ -1,0 +1,249 @@
+{
+    "Nome": "Summer Jam",
+    "Location": {
+        "Regione": "Lombardia",
+        "Provincia": "Milano",
+        "Città": "Milano",
+        "Indirizzo": "Via dei Concerti, 123",
+        "Nome Locale": "Music Arena"
+    },
+    "Artisti": ["Coldplay", "Ed Sheeran", "Beyoncé"],
+    "Data": ["2023-07-15", "2023-07-16", "2023-07-17"],
+    "Sezioni":[
+        {
+            "Nome": "Golden Circle",
+            "Posti Disponibili": "500",
+            "Costo": "$150"
+        },
+        {
+            "Nome": "General Admission",
+            "Posti Disponibili": "2000",
+            "Costo": "$80"
+        }
+    ]
+}
+
+{
+    "Nome": "Rock Fest",
+    "Location": {
+        "Regione": "Toscana",
+        "Provincia": "Firenze",
+        "Città": "Firenze",
+        "Indirizzo": "Piazza del Rock, 789",
+        "Nome Locale": "Rock Stadium"
+    },
+    "Artisti": ["Foo Fighters", "Red Hot Chili Peppers", "Muse"],
+    "Data": ["2023-08-05", "2023-08-06", "2023-08-07"],
+    "Sezioni":[
+        {
+            "Nome": "VIP Area",
+            "Posti Disponibili": "300",
+            "Costo": "$200"
+        },
+        {
+            "Nome": "General Admission",
+            "Posti Disponibili": "5000",
+            "Costo": "$70"
+        }
+    ]
+}
+
+{
+    "Nome": "Electro Vibes",
+    "Location": {
+        "Regione": "Veneto",
+        "Provincia": "Venezia",
+        "Città": "Venezia",
+        "Indirizzo": "Via degli Elettronici, 456",
+        "Nome Locale": "Electronic Club"
+    },
+    "Artisti": ["David Guetta", "Calvin Harris", "Martin Garrix"],
+    "Data": ["2023-09-10", "2023-09-11", "2023-09-12"],
+    "Sezioni":[
+        {
+            "Nome": "Dance Floor",
+            "Posti Disponibili": "800",
+            "Costo": "$90"
+        },
+        {
+            "Nome": "Balcony",
+            "Posti Disponibili": "200",
+            "Costo": "$120"
+        }
+    ]
+}
+
+{
+    "Nome": "Jazz in the Park",
+    "Location": {
+        "Regione": "Piemonte",
+        "Provincia": "Torino",
+        "Città": "Torino",
+        "Indirizzo": "Parco dei Suoni, 789",
+        "Nome Locale": "Open Air Stage"
+    },
+    "Artisti": ["Herbie Hancock", "Diana Krall", "Chick Corea"],
+    "Data": ["2023-07-22", "2023-07-23", "2023-07-24"],
+    "Sezioni":[
+        {
+            "Nome": "Premium Seats",
+            "Posti Disponibili": "400",
+            "Costo": "$120"
+        },
+        {
+            "Nome": "General Admission",
+            "Posti Disponibili": "3000",
+            "Costo": "$50"
+        }
+    ]
+}
+
+{
+    "Nome": "Indie Vibes",
+    "Location": {
+        "Regione": "Emilia-Romagna",
+        "Provincia": "Bologna",
+        "Città": "Bologna",
+        "Indirizzo": "Via degli Indie, 567",
+        "Nome Locale": "Alternative Club"
+    },
+    "Artisti": ["Arctic Monkeys", "Tame Impala", "The Strokes"],
+    "Data": ["2023-08-12", "2023-08-13", "2023-08-14"],
+    "Sezioni":[
+        {
+            "Nome": "Front Row",
+            "Posti Disponibili": "200",
+            "Costo": "$80"
+        },
+        {
+            "Nome": "Standing Area",
+            "Posti Disponibili": "1500",
+            "Costo": "$40"
+        }
+    ]
+}
+
+{
+    "Nome": "Pop Sensations",
+    "Location": {
+        "Regione": "Lombardia",
+        "Provincia": "Bergamo",
+        "Città": "Bergamo",
+        "Indirizzo": "Piazza della Musica, 1",
+        "Nome Locale": "Pop Arena"
+    },
+    "Artisti": ["Taylor Swift", "Justin Bieber", "Ariana Grande"],
+    "Data": ["2023-10-20", "2023-10-21", "2023-10-22"],
+    "Sezioni":[
+        {
+            "Nome": "Diamond VIP",
+            "Posti Disponibili": "200",
+            "Costo": "$250"
+        },
+        {
+            "Nome": "Gold Circle",
+            "Posti Disponibili": "800",
+            "Costo": "$150"
+        }
+    ]
+}
+
+{
+    "Nome": "Latin Fiesta",
+    "Location": {
+        "Regione": "Lazio",
+        "Provincia": "Roma",
+        "Città": "Roma",
+        "Indirizzo": "Via Salsa, 123",
+        "Nome Locale": "Sabor Club"
+    },
+    "Artisti": ["Shakira", "Enrique Iglesias", "Ricky Martin"],
+    "Data": ["2023-11-05", "2023-11-06", "2023-11-07"],
+    "Sezioni":[
+        {
+            "Nome": "VIP Lounge",
+            "Posti Disponibili": "300",
+            "Costo": "$180"
+        },
+        {
+            "Nome": "General Admission",
+            "Posti Disponibili": "2000",
+            "Costo": "$80"
+        }
+    ]
+}
+
+{
+    "Nome": "Hip-Hop Extravaganza",
+    "Location": {
+        "Regione": "Toscana",
+        "Provincia": "Firenze",
+        "Città": "Firenze",
+        "Indirizzo": "Via Rap, 789",
+        "Nome Locale": "Rhythm Hall"
+    },
+    "Artisti": ["Kendrick Lamar", "Drake", "Cardi B"],
+    "Data": ["2023-12-10", "2023-12-11", "2023-12-12"],
+    "Sezioni":[
+        {
+            "Nome": "Front Row",
+            "Posti Disponibili": "150",
+            "Costo": "$200"
+        },
+        {
+            "Nome": "General Admission",
+            "Posti Disponibili": "3000",
+            "Costo": "$70"
+        }
+    ]
+}
+
+{
+    "Nome": "Acoustic Serenade",
+    "Location": {
+        "Regione": "Campania",
+        "Provincia": "Napoli",
+        "Città": "Napoli",
+        "Indirizzo": "Via delle Armonie, 456",
+        "Nome Locale": "Intimate Theater"
+    },
+    "Artisti": ["Ed Sheeran", "James Bay", "Hozier"],
+    "Data": ["2024-01-15", "2024-01-16", "2024-01-17"],
+    "Sezioni":[
+        {
+            "Nome": "Front Row",
+            "Posti Disponibili": "100",
+            "Costo": "$150"
+        },
+        {
+            "Nome": "Balcony",
+            "Posti Disponibili": "500",
+            "Costo": "$90"
+        }
+    ]
+}
+
+{
+    "Nome": "Reggae Jam",
+    "Location": {
+        "Regione": "Sicilia",
+        "Provincia": "Palermo",
+        "Città": "Palermo",
+        "Indirizzo": "Viale del Reggae, 321",
+        "Nome Locale": "Island Vibes"
+    },
+    "Artisti": ["Bob Marley Tribute Band", "Damian Marley", "Alborosie"],
+    "Data": ["2024-02-20", "2024-02-21", "2024-02-22"],
+    "Sezioni":[
+        {
+            "Nome": "Reggae Lounge",
+            "Posti Disponibili": "200",
+            "Costo": "$120"
+        },
+        {
+            "Nome": "General Admission",
+            "Posti Disponibili": "1500",
+            "Costo": "$50"
+        }
+    ]
+}
