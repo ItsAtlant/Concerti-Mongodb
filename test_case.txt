@@ -1,0 +1,27 @@
+
+solo 1 posto con posti esauriti:
+_id
+648c38aaab40123ad77144d2
+Nome
+"Jazz in the Park"
+
+
+Data-scaduta:
+Nome
+"Reggae Beach Party"
+locazione
+"Kingston"
+
+
+artista in piu di un concerto "Vasco Rossi":
+{
+  "_id": {
+    "$oid": "648c38abab40223ad77944d2"
+  },
+  "Nome": "Serata Vasco",
+
+{
+  "_id": {
+    "$oid": "648a38abab40123ad77944d2"
+  },
+  "Nome": "Country Music Night",

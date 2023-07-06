@@ -1,0 +1,16 @@
+{
+  "_id": {
+    "$oid": "648c38abab40123ad77944d2"
+  },
+  "Nome": "Serata Fedez",
+  "città": "Milano Duomo",
+  "artisti": [
+    "Fedez",
+    "J-ax"
+  ],
+  "data": [
+    "22/07/2023",
+    "23/07/2023"
+  ],
+  "capacità": 7500
+}
