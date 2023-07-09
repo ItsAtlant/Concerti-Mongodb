@@ -220,9 +220,7 @@ def city_to_contry(city):
     return location.address.split(", ")[-1]
 
 def print_ticket(x):
-    print(f"\n{x['nome concerto']}")
-    fix_data = str(x['data concerto']).split(".")[0]
-    print(f"Data: {fix_data}")
+    print(f"ID concerto: {x['_id']}")
     print(f"Prezzo: {x['prezzo pagato']}€")
     fix_data = str(x['data acquisto']).split(".")[0]
     print(f"Data acquisto: {fix_data}")
@@ -236,6 +234,7 @@ def print_concert(x):
         print("\n", end="")
     else:
         print(x["data"])
+    print(f"({x['_id']})")
     print(f"Città: {x['locazione']}")
     print("Artista: ", end="")
     for artista in x["artisti"]:
