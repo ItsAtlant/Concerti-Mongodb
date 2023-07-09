@@ -53,7 +53,7 @@ nickname = input("Ciao benvenuto nell'app dei concerti, perfavore inserisci il t
 # scelta
 while True:
     try:
-        scelta = int(input("0. Visualizzazione dei tuoi biglietti digitare\n1. Acquistare un biglietto\n2. EXIT\nScegli: "))
+        scelta = int(input("0. Visualizzazione dei tuoi biglietti\n1. Acquistare un biglietto\n2. EXIT\nScegli: "))
     except ValueError:
         print("Input non valido, riprova")
         continue
