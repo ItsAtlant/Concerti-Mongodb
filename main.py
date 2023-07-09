@@ -2,8 +2,10 @@ from bson import ObjectId
 from pymongo import MongoClient
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
-import datetime
 from functools import partial
+import datetime
+import dotenv
+import os
 
 VAT_RATES = {
     "Afghanistan": 0,
@@ -232,8 +234,9 @@ def print_concert(x):
 # Initialize Nominatim API
 geolocator = Nominatim(user_agent="MyApp")
 # connect with mongo
-url = "mongodb+srv://ItsAtlant:irRNEj7rfzvzpWw7.@cluster0.gbqxuqm.mongodb.net/?retryWrites=true&w=majority"
-client = MongoClient(url)
+
+dotenv.load_dotenv()
+client = MongoClient(os.environ["MONGO_CONNECTION"])
 mydb = client["ConcertoDB"]
 collection_biglietti = mydb["Biglietti_venduti"]
 collection_concerti = mydb["Concerto"]
@@ -244,7 +247,7 @@ nickname = input("Ciao benvenuto nell'app dei concerti, perfavore inserisci il t
 # scelta
 while True:
     try:
-        scelta = int(input("Per acquistare un biglietto premere 1, se vuoi visualizzare i tuoi biglietti premi 0, digitare 2 per uscire\n"))
+        scelta = int(input("0. Visualizzazione dei tuoi biglietti digitare\n1. Acquistare un biglietto premere.\n2. EXIT\nScegli: "))
     except ValueError:
         print("Input non valido, riprova")
         continue
@@ -315,6 +318,7 @@ while True:
                                 print("Si è verificato un errore durante l'acquisto.")
                     else:
                         print("Il numero richiesto di biglietti non è disponibile per il concerto selezionato.")
+                
                 case "R":
                     artista = input("Inserisci il nome del artista desiderato: ")
 
@@ -338,6 +342,7 @@ while True:
 
                     for x in collection_concerti.find(myquery, project).sort("data", 1):
                         print_concert(x)       
+                
                 case "S":
                     costo_max = float(input("Inserisci il costo massimo desiderato: "))
 
@@ -349,6 +354,7 @@ while True:
 
                     for x in collection_concerti.find(myquery, project).sort("data", 1):
                         print_concert(x)
+                
                 case "V":
                     citta = input("Inserisci la citta dove abiti: ")
                     location = geolocator.geocode(citta)
@@ -379,6 +385,7 @@ while True:
 
                 case "ESC":
                     break
+               
                 case default:
                     print("Input non valido")
                     continue
