@@ -29,7 +29,7 @@ Il programma si suddivide nelle seguenti fasi:
 ## Utilizzo 🛠️
 
 1. Installa le librerie necessarie utilizzando il comando `pip install -r requirements.txt`.
-2. Configura il database MongoDB e le credenziali di accesso nel file `config.py`.
+2. Configura il database MongoDB e le credenziali di accesso nel file `.env`.
 3. Esegui il programma Python utilizzando il comando `python main.py`.
 4. Segui le istruzioni sul terminale per accedere e utilizzare l'app.
 
@@ -39,7 +39,7 @@ Sono benvenuti contributi, suggerimenti e segnalazioni di bug. Per favore, apri 
 
 ## Autore 🌟
 
-Programma Biglietti Concerto è stato sviluppato da Davide Soltys, Matteo Civita, Mattia rossini e Nicolo Ballabio.
+Programma Biglietti Concerto è stato sviluppato da Davide Soltys, Matteo Civita, Mattia Rossini e Nicolo Ballabio.
 
 ## Licenza 📝
 
