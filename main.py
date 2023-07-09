@@ -47,6 +47,17 @@ while True:
         print("Digitare Q per acquistare")
         print("Digitare ESC per tornare nel menù")
         scelta = input("inserire la propria scelta: ")
+        if scelta == "R":
+            artista = input("Inserisci il nome del artista desiderato: ")
+
+            myquery = {
+                "data": {"$gte": data},
+                "artisti": artista
+            }
+            project = {"coordinate": 0}
+
+            for x in collection_concerti.find(myquery, project).sort("data", 1):
+                print(x, "\n")
         if scelta == "N":
             nome = input("Inserisci il nome del concerto desiderato: ")
 
