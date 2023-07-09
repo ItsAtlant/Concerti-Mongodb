@@ -27,18 +27,35 @@ if scelta == 0:
     project = {"nome concerto": 1, "data concerto": 1, "prezzo pagato": 1, "data acquisto": 1}
 
     for x in collection_biglietti.find(my_query, project).sort("data concerto", 1):
-        print(x, "\n")
+        print(f"\n{x['nome concerto']}")
+        fix_data = str(x['data concerto']).split(".")[0]
+        print(f"Data: {fix_data}")
+        print(f"Prezzo: {x['prezzo pagato']}€")
+        fix_data = str(x['data acquisto']).split(".")[0]
+        print(f"Data acquisto: {fix_data}")
 
 
 if scelta == 1:
     data = datetime.datetime.now()
-    print(data)
     formatted_date = {"$date": data}
     myquery = {"data": {"$gte": data}}
     project = {"coordinate": 0}
 
     for x in collection_concerti.find(myquery,project).sort("data", 1):
-        print(x, "\n")
+        print(f"\n{x['Nome']}", end="")
+        if type(x["data"]) == list:
+            for dataConcert in x["data"]:
+                fix_data = str(dataConcert).split(".")[0]
+                print(f" - {fix_data}", end="")
+            print("\n", end="")
+        else:
+            print(x["data"])
+        print(f"Città: {x['locazione']}")
+        print("Artista: ", end="")
+        for artista in x["artisti"]:
+            print(artista, end=" ")
+        print(f"\nCapacità: {x['capacità']}\n")
+
 
 
     print("Digitare R per cercare l'artista")
