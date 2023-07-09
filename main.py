@@ -247,7 +247,7 @@ nickname = input("Ciao benvenuto nell'app dei concerti, perfavore inserisci il t
 # scelta
 while True:
     try:
-        scelta = int(input("0. Visualizzazione dei tuoi biglietti digitare\n1. Acquistare un biglietto premere.\n2. EXIT\nScegli: "))
+        scelta = int(input("0. Visualizzazione dei tuoi biglietti digitare\n1. Acquistare un biglietto\n2. EXIT\nScegli: "))
     except ValueError:
         print("Input non valido, riprova")
         continue
@@ -268,9 +268,10 @@ while True:
             myquery = {"data": {"$gte": data}}
             project = {"coordinate": 0}
 
-            for x in collection_concerti.find(myquery,project).sort("data", 1):
+            for i, x in enumerate(collection_concerti.find(myquery, project).sort("data", 1)):
                 print_concert(x)
-
+                if i == 4:
+                    break
             print("Digitare R per cercare l'artista")
             print("Digitare V per cercare per vicinanza")
             print("Digitare S per cercare per costo")
