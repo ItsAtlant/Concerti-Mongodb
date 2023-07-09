@@ -214,10 +214,10 @@ def city_to_contry(city):
     return location.address.split(", ")[-1]
 
 def print_ticket(x):
-    print(f"ID concerto: {x['_id']}")
+    print("Nome concerto:", collection_concerti.find_one(ObjectId(x["id concerto"]))["Nome"])
     print(f"Prezzo: {x['prezzo pagato']}€")
     fix_data = str(x['data acquisto']).split(".")[0]
-    print(f"Data acquisto: {fix_data}")
+    print(f"Data acquisto: {fix_data} \n")
 
 def print_concert(x):
     print(f"\n{x['Nome']} ", end="")
@@ -258,7 +258,7 @@ while True:
     match scelta:
         case 0:
             my_query = {"nome utente": nickname}
-            project = {"nome concerto": 1, "data concerto": 1, "prezzo pagato": 1, "data acquisto": 1}
+            project = {"nome concerto": 1, "id concerto": 1, "data concerto": 1, "prezzo pagato": 1, "data acquisto": 1}
 
             for x in collection_biglietti.find(my_query, project).sort("data concerto", 1):
                 print_ticket(x)
@@ -330,7 +330,6 @@ while True:
 
                     for x in collection_concerti.find(myquery, project).sort("data", 1):
                         print_concert(x)
-
                 case "N":
                     nome = input("Inserisci il nome del concerto desiderato: ")
 
@@ -341,8 +340,7 @@ while True:
                     project = {"coordinate": 0}
 
                     for x in collection_concerti.find(myquery, project).sort("data", 1):
-                        print_concert(x)
-                
+                        print_concert(x)       
                 case "S":
                     costo_max = float(input("Inserisci il costo massimo desiderato: "))
 
@@ -354,7 +352,6 @@ while True:
 
                     for x in collection_concerti.find(myquery, project).sort("data", 1):
                         print_concert(x)
-
                 case "V":
                     citta = input("Inserisci la citta dove abiti: ")
                     location = geolocator.geocode(citta)
