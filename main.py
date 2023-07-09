@@ -291,10 +291,13 @@ while True:
             get_iva = VAT_RATES[paese]
             print(get_iva)
             id_concerto = input("Inserisci l'ID del concerto per cui desideri acquistare i biglietti: ")
+            disponibilita = collection_biglietti.count_documents({"id concerto": ObjectId(id_concerto)})
+            numero_di_posti_liberi = collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"capacità": 1})["capacità"]-disponibilita
+            print("Sono rimasti",numero_di_posti_liberi, "biglietti disponibili")
             num_biglietti = int(input("Inserisci il numero di biglietti che desideri acquistare: "))
 
             # Verifica disponibilità dei biglietti
-            disponibilita = collection_biglietti.count_documents({"id concerto": ObjectId(id_concerto)})
+
 
             if disponibilita + num_biglietti <= \
                     collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"capacità": 1})["capacità"]:
