@@ -1,11 +1,5 @@
 from bson import ObjectId
 from pymongo import MongoClient
-from functools import partial   
-from geopy.geocoders import Nominatim
-from geopy.distance import geodesic
-import datetime
-from bson import ObjectId
-from pymongo import MongoClient
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 import datetime
@@ -330,6 +324,7 @@ while True:
 
                     for x in collection_concerti.find(myquery, project).sort("data", 1):
                         print_concert(x)
+
                 case "N":
                     nome = input("Inserisci il nome del concerto desiderato: ")
 
