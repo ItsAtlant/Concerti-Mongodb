@@ -1,21 +1,15 @@
 from bson import ObjectId
-from bson import DatetimeConversion
 from pymongo import MongoClient
 from functools import partial   
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 import datetime
 from bson import ObjectId
-from bson import DatetimeConversion
 from pymongo import MongoClient
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 import datetime
-import requests
-import pycountry
-from pycountry_convert import country_alpha2_to_country_name
 from functools import partial
-
 
 VAT_RATES = {
     "Afghanistan": 0,
@@ -255,136 +249,149 @@ nickname = input("Ciao benvenuto nell'app dei concerti, perfavore inserisci il t
 
 # scelta
 while True:
-    scelta = int(input("Per acquistare un biglietto premere 1, se vuoi visualizzare i tuoi biglietti premi 0: "))
+    try:
+        scelta = int(input("Per acquistare un biglietto premere 1, se vuoi visualizzare i tuoi biglietti premi 0, digitare 2 per uscire\n"))
+    except ValueError:
+        print("Input non valido, riprova")
+        continue
     # visualizzare i biglietti
-    if scelta == 0:
-        my_query = {"nome utente": nickname}
-        project = {"nome concerto": 1, "data concerto": 1, "prezzo pagato": 1, "data acquisto": 1}
+    match scelta:
+        case 0:
+            my_query = {"nome utente": nickname}
+            project = {"nome concerto": 1, "data concerto": 1, "prezzo pagato": 1, "data acquisto": 1}
 
-        for x in collection_biglietti.find(my_query, project).sort("data concerto", 1):
-            print_ticket(x)
+            for x in collection_biglietti.find(my_query, project).sort("data concerto", 1):
+                print_ticket(x)
 
+        case 1:
+            data = datetime.datetime.now()
+            formatted_date = {"$date": data}
+            myquery = {"data": {"$gte": data}}
+            project = {"coordinate": 0}
 
-    if scelta == 1:
-        data = datetime.datetime.now()
-        formatted_date = {"$date": data}
-        myquery = {"data": {"$gte": data}}
-        project = {"coordinate": 0}
+            for x in collection_concerti.find(myquery,project).sort("data", 1):
+                print_concert(x)
 
-        for x in collection_concerti.find(myquery,project).sort("data", 1):
-            print_concert(x)
+            print("Digitare R per cercare l'artista")
+            print("Digitare V per cercare per vicinanza")
+            print("Digitare S per cercare per costo")
+            print("Digitare N per cercare per nome del concerto")
+            print("Digitare Q per acquistare")
+            print("Digitare ESC per tornare nel menù\n")
 
+            scelta = input("inserire la propria scelta: ")
+            match scelta:
+                case "Q":
 
-        print("Digitare R per cercare l'artista")
-        print("Digitare V per cercare per vicinanza") # fatto
-        print("Digitare S per cercare per costo")
-        print("Digitare N per cercare per nome del concerto")
-        print("Digitare Q per acquistare")
-        print("Digitare ESC per tornare nel menù")
-        scelta = input("inserire la propria scelta: ")
-        if scelta == "Q":
+                    citta = input("Inserisci la citta dove abiti: ")
+                    paese = city_to_contry(citta)
+                    location = geolocator.geocode(citta)
+                    get_iva = VAT_RATES[paese]
+                    print(get_iva)
+                    id_concerto = input("Inserisci l'ID del concerto per cui desideri acquistare i biglietti: ")
+                    disponibilita = collection_biglietti.count_documents({"id concerto": ObjectId(id_concerto)})
+                    numero_di_posti_liberi = collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"capacità": 1})["capacità"]-disponibilita
+                    print("Sono rimasti",numero_di_posti_liberi, "biglietti disponibili")
+                    num_biglietti = int(input("Inserisci il numero di biglietti che desideri acquistare: "))
 
-            citta = input("Inserisci la citta dove abiti: ")
-            paese = city_to_contry(citta)
-            location = geolocator.geocode(citta)
-            get_iva = VAT_RATES[paese]
-            print(get_iva)
-            id_concerto = input("Inserisci l'ID del concerto per cui desideri acquistare i biglietti: ")
-            disponibilita = collection_biglietti.count_documents({"id concerto": ObjectId(id_concerto)})
-            numero_di_posti_liberi = collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"capacità": 1})["capacità"]-disponibilita
-            print("Sono rimasti",numero_di_posti_liberi, "biglietti disponibili")
-            num_biglietti = int(input("Inserisci il numero di biglietti che desideri acquistare: "))
+                    # Verifica disponibilità dei biglietti
+                    if disponibilita + num_biglietti <= \
+                            collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"capacità": 1})["capacità"]:
+                        costo = collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"costo no iva": 1})[
+                            "costo no iva"]
+                        for _ in range(num_biglietti):
+                            data_acquisto = datetime.datetime.now()
 
-            # Verifica disponibilità dei biglietti
+                            # Creazione del documento per l'acquisto
+                            documento_acquisto = {
+                                "nome utente": nickname,
+                                "id concerto": ObjectId(id_concerto),
+                                "prezzo pagato": (costo + costo * get_iva / 100),
+                                "data acquisto": data_acquisto
+                            }
 
+                            # Inserimento del documento nella collezione "Biglietti_venduti"
+                            result = collection_biglietti.insert_one(documento_acquisto)
 
-            if disponibilita + num_biglietti <= \
-                    collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"capacità": 1})["capacità"]:
-                costo = collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"costo no iva": 1})[
-                    "costo no iva"]
-                for _ in range(num_biglietti):
-                    data_acquisto = datetime.datetime.now()
-
-                    # Creazione del documento per l'acquisto
-                    documento_acquisto = {
-                        "nome utente": nickname,
-                        "id concerto": ObjectId(id_concerto),
-                        "prezzo pagato": (costo + costo * get_iva / 100),
-                        "data acquisto": data_acquisto
-                    }
-
-                    # Inserimento del documento nella collezione "Biglietti_venduti"
-                    result = collection_biglietti.insert_one(documento_acquisto)
-
-                    if result.inserted_id:
-                        print("Acquisto completato con successo!")
+                            if result.inserted_id:
+                                print("Acquisto completato con successo!")
+                            else:
+                                print("Si è verificato un errore durante l'acquisto.")
                     else:
-                        print("Si è verificato un errore durante l'acquisto.")
-            else:
-                print("Il numero richiesto di biglietti non è disponibile per il concerto selezionato.")
-        if scelta == "R":
-            artista = input("Inserisci il nome del artista desiderato: ")
+                        print("Il numero richiesto di biglietti non è disponibile per il concerto selezionato.")
+                case "R":
+                    artista = input("Inserisci il nome del artista desiderato: ")
 
-            myquery = {
-                "data": {"$gte": data},
-                "artisti": artista
-            }
-            project = {"coordinate": 0}
-
-            for x in collection_concerti.find(myquery, project).sort("data", 1):
-                print_concert(x)
-
-        
-        if scelta == "N":
-            nome = input("Inserisci il nome del concerto desiderato: ")
-
-            myquery = {
-                "data": {"$gte": data},
-                "Nome": nome
-            }
-            project = {"coordinate": 0}
-
-            for x in collection_concerti.find(myquery, project).sort("data", 1):
-                print_concert(x)
-        
-        
-        if scelta == "S":
-            costo_max = float(input("Inserisci il costo massimo desiderato: "))
-
-            myquery = {
-                "data": {"$gte": data},
-                "costo no iva": {"$lte": costo_max}
-            }
-            project = {"coordinate": 0}
-
-            for x in collection_concerti.find(myquery, project).sort("data", 1):
-                print_concert(x)
-
-
-        if scelta == "V":
-            citta = input("Inserisci la citta dove abiti: ")
-            location = geolocator.geocode(citta)
-            collection_concerti.create_index([("coordinate", "2dsphere")])
-            distance_range = input("Inserisci entro quanti km: ")
-            myquery = {
-                "data": {"$gte": data},
-                "coordinate": {
-                    "$near": {
-                        "$geometry": {
-                            "type": "Point",
-                            "coordinates": [location.longitude, location.latitude]
-                        },
-                        "$maxDistance": int(distance_range) * 1000
+                    myquery = {
+                        "data": {"$gte": data},
+                        "artisti": artista
                     }
-                }
-            }
-            project = {}
+                    project = {"coordinate": 0}
 
-            for x in collection_concerti.find(myquery, project).sort("coordinate", 1):
-                concert_coordinates = x["coordinate"]["coordinates"]
-                reference_coordinates = [location.longitude, location.latitude]
-                concert_distance = geodesic((reference_coordinates[1], reference_coordinates[0]), (concert_coordinates[1], concert_coordinates[0])).kilometers
+                    for x in collection_concerti.find(myquery, project).sort("data", 1):
+                        print_concert(x)
 
-                print_concert(x)
-                print("Distanza: {:.2f} km".format(concert_distance))
-                print("\n")
+                case "N":
+                    nome = input("Inserisci il nome del concerto desiderato: ")
+
+                    myquery = {
+                        "data": {"$gte": data},
+                        "Nome": nome
+                    }
+                    project = {"coordinate": 0}
+
+                    for x in collection_concerti.find(myquery, project).sort("data", 1):
+                        print_concert(x)
+                
+                case "S":
+                    costo_max = float(input("Inserisci il costo massimo desiderato: "))
+
+                    myquery = {
+                        "data": {"$gte": data},
+                        "costo no iva": {"$lte": costo_max}
+                    }
+                    project = {"coordinate": 0}
+
+                    for x in collection_concerti.find(myquery, project).sort("data", 1):
+                        print_concert(x)
+
+                case "V":
+                    citta = input("Inserisci la citta dove abiti: ")
+                    location = geolocator.geocode(citta)
+                    collection_concerti.create_index([("coordinate", "2dsphere")])
+                    distance_range = input("Inserisci entro quanti km: ")
+                    myquery = {
+                        "data": {"$gte": data},
+                        "coordinate": {
+                            "$near": {
+                                "$geometry": {
+                                    "type": "Point",
+                                    "coordinates": [location.longitude, location.latitude]
+                                },
+                                "$maxDistance": int(distance_range) * 1000
+                            }
+                        }
+                    }
+                    project = {}
+
+                    for x in collection_concerti.find(myquery, project).sort("coordinate", 1):
+                        concert_coordinates = x["coordinate"]["coordinates"]
+                        reference_coordinates = [location.longitude, location.latitude]
+                        concert_distance = geodesic((reference_coordinates[1], reference_coordinates[0]), (concert_coordinates[1], concert_coordinates[0])).kilometers
+
+                        print_concert(x)
+                        print("Distanza: {:.2f} km".format(concert_distance))
+                        print("\n")
+
+                case "ESC":
+                    break
+                case default:
+                    print("Input non valido")
+                    continue
+        
+        case 2:
+            break
+
+        case default:
+            print("Input non valido")
+            continue
