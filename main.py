@@ -1,14 +1,16 @@
 from bson import ObjectId
 from bson import DatetimeConversion
 from pymongo import MongoClient
+from functools import partial   
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 import datetime
 
 
 def city_to_contry(city):
-    location = geolocator.geocode(city)
-    return location.raw["display_name"].split(", ")[-1]
+    geocode_en = partial(geolocator.geocode, language="en")
+    location = geocode_en(city)
+    return location.address.split(", ")[-1]
 
 def print_ticket(x):
     print(f"\n{x['nome concerto']}")
@@ -35,7 +37,7 @@ def print_concert(x):
 
 # Initialize Nominatim API
 geolocator = Nominatim(user_agent="MyApp")
-
+print(city_to_contry("Roma"))
 # connect with mongo
 url = "mongodb+srv://ItsAtlant:irRNEj7rfzvzpWw7.@cluster0.gbqxuqm.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(url)
