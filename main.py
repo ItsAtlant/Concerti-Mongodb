@@ -243,7 +243,6 @@ def print_concert(x):
 
 # Initialize Nominatim API
 geolocator = Nominatim(user_agent="MyApp")
-print(city_to_contry("Roma"))
 # connect with mongo
 url = "mongodb+srv://ItsAtlant:irRNEj7rfzvzpWw7.@cluster0.gbqxuqm.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(url)
