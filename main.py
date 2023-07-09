@@ -260,8 +260,10 @@ while True:
             my_query = {"nome utente": nickname}
             project = {"nome concerto": 1, "id concerto": 1, "data concerto": 1, "prezzo pagato": 1, "data acquisto": 1}
 
-            for x in collection_biglietti.find(my_query, project).sort("data concerto", 1):
+            for i, x in enumerate(collection_biglietti.find(my_query, project).sort("data concerto", 1)):
                 print_ticket(x)
+                if i == 4:
+                    break
 
         case 1:
             data = datetime.datetime.now()
