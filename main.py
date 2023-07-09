@@ -5,6 +5,29 @@ from geopy.geocoders import Nominatim
 import datetime
 
 
+def print_ticket(x):
+    print(f"\n{x['nome concerto']}")
+    fix_data = str(x['data concerto']).split(".")[0]
+    print(f"Data: {fix_data}")
+    print(f"Prezzo: {x['prezzo pagato']}€")
+    fix_data = str(x['data acquisto']).split(".")[0]
+    print(f"Data acquisto: {fix_data}")
+
+def print_concert(x):
+    print(f"\n{x['Nome']}", end="")
+        if type(x["data"]) == list:
+            for dataConcert in x["data"]:
+                fix_data = str(dataConcert).split(".")[0]
+                print(f" - {fix_data}", end="")
+            print("\n", end="")
+        else:
+            print(x["data"])
+        print(f"Città: {x['locazione']}")
+        print("Artista: ", end="")
+        for artista in x["artisti"]:
+            print(artista, end=" ")
+        print(f"\nCapacità: {x['capacità']}\n")
+
 # Initialize Nominatim API
 geolocator = Nominatim(user_agent="MyApp")
 
@@ -27,12 +50,7 @@ if scelta == 0:
     project = {"nome concerto": 1, "data concerto": 1, "prezzo pagato": 1, "data acquisto": 1}
 
     for x in collection_biglietti.find(my_query, project).sort("data concerto", 1):
-        print(f"\n{x['nome concerto']}")
-        fix_data = str(x['data concerto']).split(".")[0]
-        print(f"Data: {fix_data}")
-        print(f"Prezzo: {x['prezzo pagato']}€")
-        fix_data = str(x['data acquisto']).split(".")[0]
-        print(f"Data acquisto: {fix_data}")
+        print_ticket(x)
 
 
 if scelta == 1:
@@ -42,19 +60,7 @@ if scelta == 1:
     project = {"coordinate": 0}
 
     for x in collection_concerti.find(myquery,project).sort("data", 1):
-        print(f"\n{x['Nome']}", end="")
-        if type(x["data"]) == list:
-            for dataConcert in x["data"]:
-                fix_data = str(dataConcert).split(".")[0]
-                print(f" - {fix_data}", end="")
-            print("\n", end="")
-        else:
-            print(x["data"])
-        print(f"Città: {x['locazione']}")
-        print("Artista: ", end="")
-        for artista in x["artisti"]:
-            print(artista, end=" ")
-        print(f"\nCapacità: {x['capacità']}\n")
+        print_concert(x)
 
 
 
