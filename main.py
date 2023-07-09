@@ -1,11 +1,5 @@
 from bson import ObjectId
 from pymongo import MongoClient
-from functools import partial   
-from geopy.geocoders import Nominatim
-from geopy.distance import geodesic
-import datetime
-from bson import ObjectId
-from pymongo import MongoClient
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 import datetime
@@ -289,7 +283,7 @@ while True:
                     paese = city_to_contry(citta)
                     location = geolocator.geocode(citta)
                     get_iva = VAT_RATES[paese]
-                    print(get_iva)
+                    print("l'iva nel tuo paese è del ", get_iva, "%")
                     id_concerto = input("Inserisci l'ID del concerto per cui desideri acquistare i biglietti: ")
                     disponibilita = collection_biglietti.count_documents({"id concerto": ObjectId(id_concerto)})
                     numero_di_posti_liberi = collection_concerti.find_one({"_id": ObjectId(id_concerto)}, {"capacità": 1})["capacità"]-disponibilita
@@ -332,6 +326,7 @@ while True:
 
                     for x in collection_concerti.find(myquery, project).sort("data", 1):
                         print_concert(x)
+
                 case "N":
                     nome = input("Inserisci il nome del concerto desiderato: ")
 
