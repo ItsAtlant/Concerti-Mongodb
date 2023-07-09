@@ -6,6 +6,10 @@ from geopy.distance import geodesic
 import datetime
 
 
+def city_to_contry(city):
+    location = geolocator.geocode(city)
+    return location.raw["display_name"].split(", ")[-1]
+
 def print_ticket(x):
     print(f"\n{x['nome concerto']}")
     fix_data = str(x['data concerto']).split(".")[0]
