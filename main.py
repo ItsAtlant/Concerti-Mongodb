@@ -43,11 +43,21 @@ while True:
         print("Digitare R per cercare l'artista")
         print("Digitare V per cercare per vicinanza") # fatto
         print("Digitare S per cercare per costo")
-        print("Digitare N per cercare per nome")
-        print("Digitare A per cercare per artista")
+        print("Digitare N per cercare per nome del concerto")
         print("Digitare Q per acquistare")
         print("Digitare ESC per tornare nel menù")
         scelta = input("inserire la propria scelta: ")
+        if scelta == "N":
+            nome = input("Inserisci il nome del concerto desiderato: ")
+
+            myquery = {
+                "data": {"$gte": data},
+                "Nome": nome
+            }
+            project = {"coordinate": 0}
+
+            for x in collection_concerti.find(myquery, project).sort("data", 1):
+                print(x, "\n")
         if scelta == "S":
             costo_max = float(input("Inserisci il costo massimo desiderato: "))
 
