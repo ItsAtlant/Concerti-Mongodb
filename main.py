@@ -48,6 +48,19 @@ while True:
         print("Digitare Q per acquistare")
         print("Digitare ESC per tornare nel menù")
         scelta = input("inserire la propria scelta: ")
+        if scelta == "S":
+            costo_max = float(input("Inserisci il costo massimo desiderato: "))
+
+            myquery = {
+                "data": {"$gte": data},
+                "costo no iva": {"$lte": costo_max}
+            }
+            project = {"coordinate": 0}
+
+            for x in collection_concerti.find(myquery, project).sort("data", 1):
+                print(x, "\n")
+
+
 
         if scelta == "V":
             citta = input("Inserisci la citta dove abiti: ")
